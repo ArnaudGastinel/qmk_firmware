@@ -1,11 +1,9 @@
-SRC += muse.c
-SRC += features/caps_word.c
 
 COMMAND_ENABLE   = no   # Disable shift combination, which conflicts with shift-parens
 NKRO_ENABLE      = yes  # N-key rollover required for use as a steno board
 AUDIO_ENABLE     = yes   # Audio output on port C6
 TAP_DANCE_ENABLE = yes
-MOUSEKEY_ENABLE  = yes
+MOUSEKEY_ENABLE  = no
 CONSOLE_ENABLE = no
 BACKLIGHT_ENABLE = yes
 LTO_ENABLE = yes
@@ -15,4 +13,6 @@ EXTRAKEY_ENABLE = yes       # Audio control and System control(+450)`
 BLUETOOTH_ENABLE = no       # Enable Bluetooth with the Adafruit EZ-Key HID
 COMBO_ENABLE = yes
 CONSOLE_ENABLE = yes
-UNICODE_ENABLE = no
+UNICODE_ENABLE = yes
+CAPS_WORD_ENABLE = yes
+LEADER_ENABLE = yes

@@ -17,11 +17,12 @@
 #pragma once
 
 #ifdef AUDIO_ENABLE
-#define STARTUP_SONG SONG(PLANCK_SOUND)
+   #define STARTUP_SONG SONG(PLANCK_SOUND)
 
-#define DEFAULT_LAYER_SONGS \
-        { SONG(QWERTY_SOUND), SONG(COLEMAK_SOUND), SONG(DVORAK_SOUND) }
+   #define DEFAULT_LAYER_SONGS \
+         { SONG(QWERTY_SOUND), SONG(COLEMAK_SOUND), SONG(DVORAK_SOUND) }
 #endif
+
 
 /*
  * MIDI options
@@ -52,8 +53,8 @@
 #define CTL_ESC CTL_T(KC_ESC)
 #define CTL_ENT CTL_T(KC_ENT)
 
-#define GUI_L LT(GUI_LAYER, KC_LBRC)
-#define GUI_R LT(GUI_LAYER, KC_RBRC)
+#define GUI_L LT(FN_LAYER, KC_LBRC)
+#define GUI_R LT(FN_LAYER, KC_RBRC)
 
 #define NAV_SPC LT(NAV_LAYER, KC_SPC)
 
@@ -62,10 +63,31 @@
 #define TAPPING_TOGGLE 2
 
 #define TAPPING_TERM 175
+
+// Caps word
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 #define CAPS_WORD_IDLE_TIMEOUT 10000
 
 #define COMBO_TERM 20
 
-// TODO
 #define IGNORE_MOD_TAP_INTERRUPT
 #define PERMISSIVE_HOLD
+
+// LeaderKey
+#define LEADER_TIMEOUT 1000
+// https://docs.qmk.fm/#/feature_leader_key?id=infinite-leader-key-timeout
+#define LEADER_NO_TIMEOUT
+
+#define NO_MUSIC_MODE
+
+#define AUDIO_CLICKY
+// LEDs
+#define BOTTOM_RIGHT_LED 1
+#define BOTTOM_LEFT_LED 8
+#define TOP_LEFT_LED 6
+#define TOP_MIDDLE_LEFT_LED 5
+#define TOP_MIDDLE_RIGHT_LED 4
+#define TOP_RIGHT_LED 3
+
+#define MIN_INDICATION_DURATION 1500
