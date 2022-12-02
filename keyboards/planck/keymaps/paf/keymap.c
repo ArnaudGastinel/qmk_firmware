@@ -202,21 +202,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Directional navigation layer
   *
-  *          Large movements -----/```````````````````\   /```````````````````\----- Vim-style arrow keys
+  *     ASD gaming -----/`````````\                               /``````````````````````\----- Vim-style arrow keys
   *                 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
-  *                 │     │     │     │     │     │     │     │     │     │     │     │     │
+  *                 │     │Home │  ↑  │ End │     │     │     │     │     │     │     │     │     │
   *                 ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
-  *                 │     │     │Home │PgUp │PgDn │ End │  ←  │  ↓  │  ↑  │  →  │     │     │
+  *                 │     │  ←  │  ↓  │  →  │     │     │     │  ←  │  ↓  │  ↑  │  →  │ PgUp│
   *                 ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
-  *                 │     │     │     │     │     │     │     │     │     │     │     │     │
+  *                 │     │     │     │     │     │     │     │     │     │     │     │ PgDn│
   *                 ├─────┼─────┼─────┼─────┼─────╆━━━━━━━━━━━╅─────┼─────┼─────┼─────┼─────┤
   *                 │     │     │     │     │     ┃           ┃     │     │     │     │     │
   *                 └─────┴─────┴─────┴─────┴─────┺━━━━━━━━━━━┹─────┴─────┴─────┴─────┴─────┘
   */
   [NAV_LAYER] = LAYOUT_planck_grid(
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    _______, XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, _______,
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    XXXXXXX, KC_HOME, KC_UP,   KC_END,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_PGUP,
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN,
     _______, _______, _______, _______, XXXXXXX, NAV_SPC, NAV_SPC, XXXXXXX, _______, _______, _______, _______
   ),
 
@@ -278,8 +278,12 @@ enum combo_events {
   MIN,
   ALT_MIN,
   PLUS,
+  EQUAL,
   UNDERSCORE,
   CEDILLE,
+  GREATER_THAN,
+  LESSER_THAN,
+  NOT_EQUAL,
   COMBO_LENGTH
 };
 uint16_t COMBO_LEN = COMBO_LENGTH; // remove the COMBO_COUNT define and use this instead!
@@ -302,9 +306,15 @@ const uint16_t PROGMEM underscore_combo[] = {KC_Z, KC_X, COMBO_END};
 const uint16_t PROGMEM minus_combo[] = {KC_N, KC_M, COMBO_END};
 const uint16_t PROGMEM alt_minus_combo[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM plus_combo[] = {KC_H, KC_J, COMBO_END};
+const uint16_t PROGMEM equal_combo[] = {KC_Y, KC_U, COMBO_END};
+const uint16_t PROGMEM greater_than_combo[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM lesser_than_combo[] = {KC_DOT, KC_SLASH, COMBO_END};
+const uint16_t PROGMEM not_equal_combo[] = {KC_COMM, KC_DOT, COMBO_END};
+
 // Navigation
-const uint16_t PROGMEM home_combo[] = {KC_S, KC_D, COMBO_END};
-const uint16_t PROGMEM end_combo[] = {KC_F, KC_G, COMBO_END};
+const uint16_t PROGMEM home_combo[] = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM end_combo[] = {KC_D, KC_F, COMBO_END};
+
 
 combo_t key_combos[] = {
     //
@@ -316,7 +326,10 @@ combo_t key_combos[] = {
   [MIN] = COMBO(minus_combo, KC_MINUS),
   [ALT_MIN] = COMBO(alt_minus_combo, KC_MINUS),
   [PLUS] = COMBO(plus_combo, KC_PLUS),
+  [EQUAL] = COMBO(equal_combo, KC_EQUAL),
   [UNDERSCORE] = COMBO(underscore_combo, KC_UNDS),
+  [GREATER_THAN] = COMBO(greater_than_combo, S(KC_COMM)),
+  [LESSER_THAN] = COMBO(lesser_than_combo, S(KC_DOT)),
   ////////
   [E_ACUTE] = COMBO_ACTION(e_acute_combo),
   [E_GRAVE] = COMBO_ACTION(e_grave_combo),
@@ -326,6 +339,7 @@ combo_t key_combos[] = {
   [I_TREMA] = COMBO_ACTION(i_trema_combo),
   [U_GRAVE] = COMBO_ACTION(u_grave_combo),
   [U_CIRCUM] = COMBO_ACTION(u_circum_combo),
+  [NOT_EQUAL] = COMBO_ACTION(not_equal_combo),
   //
   [CEDILLE] = COMBO_ACTION(cedille_combo)
 
@@ -380,6 +394,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         SEND_STRING(SS_DOWN(X_RALT) SS_TAP(X_COMM) SS_UP(X_RALT));
       }
       break;
+    case NOT_EQUAL:
+      if (pressed) {
+        SEND_STRING(SS_LSFT(SS_TAP(X_1)) SS_TAP(X_EQL) );
+      }
+      break;
     // case BSPC_LSFT_CLEAR:
     //   if (pressed) {
     //     tap_code16(KC_END);
@@ -400,6 +419,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   float disney_song[][2] = SONG(DISNEY_SONG);
   float mario_theme_song[][2] = SONG(MARIO_THEME);
   float imperial_march_song[][2] = SONG(IMPERIAL_MARCH);
+  float mario_game_over_song[][2] = SONG(MARIO_GAMEOVER);
 #endif
 
 // Initialize variable holding the binary
@@ -488,6 +508,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case RESET:
+        rgblight_setrgb(RGB_PINK);
+        rgblight_setrgb_at(RGB_CYAN, BOTTOM_RIGHT_LED);
+        rgblight_setrgb_at(RGB_CYAN, BOTTOM_LEFT_LED);
   }
   return true;
 }
@@ -912,6 +936,14 @@ LEADER_DICTIONARY() {
       SEND_STRING("kubectl logs -f --since=10m");
       did_leader_succeed = true;
   }
+  SEQ_TWO_KEYS(KC_K, KC_D) {
+      SEND_STRING("kubectl describe ");
+      did_leader_succeed = true;
+  }
+  SEQ_TWO_KEYS(KC_K, KC_R) {
+      SEND_STRING("kubectl delete ");
+      did_leader_succeed = true;
+  }
 
   // QMK
   SEQ_THREE_KEYS(KC_Q, KC_M, KC_K) {
@@ -938,6 +970,11 @@ LEADER_DICTIONARY() {
   }
   SEQ_FOUR_KEYS(KC_S, KC_T, KC_A, KC_R) {
     PLAY_SONG(imperial_march_song);
+    did_leader_succeed = true;
+  }
+  
+  SEQ_FOUR_KEYS(KC_O, KC_V, KC_E, KC_R) {
+    PLAY_SONG(mario_game_over_song);
     did_leader_succeed = true;
   }
 
