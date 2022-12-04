@@ -162,7 +162,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC,
       KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH,
       KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT,
-      KC_LEAD, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+      QK_LEAD, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
   ),
 
   /* Numeric layer
@@ -319,7 +319,7 @@ const uint16_t PROGMEM end_combo[] = {KC_D, KC_F, COMBO_END};
 
 combo_t key_combos[] = {
     //
-  [LEADER_KEY] = COMBO(lead_key_combo, KC_LEAD),
+  [LEADER_KEY] = COMBO(lead_key_combo, QK_LEAD),
   /////////
   [HOME] = COMBO(home_combo, KC_HOME),
   [END] = COMBO(end_combo, KC_END),
@@ -911,83 +911,83 @@ void leader_end(void) {
 }
 
 void matrix_scan_user(void) {
-LEADER_DICTIONARY() {
-  did_leader_succeed = leading = false;
+  LEADER_DICTIONARY() {
+    did_leader_succeed = leading = false;
 
-  // GIT
-  SEQ_TWO_KEYS(KC_G, KC_A) {
-    SEND_STRING("git add . && git commit");
-    did_leader_succeed = true;
-  }
-  SEQ_TWO_KEYS(KC_G, KC_F) {
-    SEND_STRING("git push --force-with-lease");
-    did_leader_succeed = true;
-  }
-  SEQ_THREE_KEYS(KC_G, KC_A, KC_M) {
-    SEND_STRING("git add . && git commit --amend");
-    did_leader_succeed = true;
-  }
-
-  // KUBERNETES
-  SEQ_TWO_KEYS(KC_K, KC_P) {
-    SEND_STRING("kubectl get pods");
-    did_leader_succeed = true;
-  }
-  SEQ_TWO_KEYS(KC_K, KC_L) {
-      SEND_STRING("kubectl logs -f --since=10m");
+    // GIT
+    SEQ_TWO_KEYS(KC_G, KC_A) {
+      SEND_STRING("git add . && git commit");
       did_leader_succeed = true;
-  }
-  SEQ_TWO_KEYS(KC_K, KC_D) {
-      SEND_STRING("kubectl describe ");
+    }
+    SEQ_TWO_KEYS(KC_G, KC_F) {
+      SEND_STRING("git push --force-with-lease");
       did_leader_succeed = true;
-  }
-  SEQ_TWO_KEYS(KC_K, KC_R) {
-      SEND_STRING("kubectl delete ");
+    }
+    SEQ_THREE_KEYS(KC_G, KC_A, KC_M) {
+      SEND_STRING("git add . && git commit --amend");
       did_leader_succeed = true;
-  }
+    }
 
-  // QMK
-  SEQ_THREE_KEYS(KC_Q, KC_M, KC_K) {
-    SEND_STRING("qmk compile -kb planck/rev6 -km paf");
-    did_leader_succeed = true;
-  }
+    // KUBERNETES
+    SEQ_TWO_KEYS(KC_K, KC_P) {
+      SEND_STRING("kubectl get pods");
+      did_leader_succeed = true;
+    }
+    SEQ_TWO_KEYS(KC_K, KC_L) {
+        SEND_STRING("kubectl logs -f --since=10m");
+        did_leader_succeed = true;
+    }
+    SEQ_TWO_KEYS(KC_K, KC_D) {
+        SEND_STRING("kubectl describe ");
+        did_leader_succeed = true;
+    }
+    SEQ_TWO_KEYS(KC_K, KC_R) {
+        SEND_STRING("kubectl delete ");
+        did_leader_succeed = true;
+    }
 
-  // DO NOT TELL ME WHAT TO DO
-  SECRET_COMBO_1 {
-    SEND_STRING_SECRET_1;
-    did_leader_succeed = true;
-  }
+    // QMK
+    SEQ_THREE_KEYS(KC_Q, KC_M, KC_K) {
+      SEND_STRING("qmk compile -kb planck/rev6 -km paf");
+      did_leader_succeed = true;
+    }
 
-  // Songs
-  SEQ_TWO_KEYS(KC_R, KC_R) {
-    PLAY_SONG(rick);
-    did_leader_succeed = true;
-  }
-  SEQ_FIVE_KEYS(KC_M, KC_A, KC_R, KC_I, KC_O) {
-    PLAY_SONG(mario_theme_song);
-    did_leader_succeed = true;
-  }
-  SEQ_FOUR_KEYS(KC_M, KC_U, KC_S, KC_H) {
-    PLAY_SONG(mario_mushroom_song);
-    did_leader_succeed = true;
-  }
-  SEQ_THREE_KEYS(KC_D, KC_I, KC_S) {
-    PLAY_SONG(disney_song);
-    did_leader_succeed = true;
-  }
-  SEQ_FOUR_KEYS(KC_S, KC_T, KC_A, KC_R) {
-    PLAY_SONG(imperial_march_song);
-    did_leader_succeed = true;
-  }
-  
-  SEQ_FOUR_KEYS(KC_O, KC_V, KC_E, KC_R) {
-    PLAY_SONG(mario_game_over_song);
-    did_leader_succeed = true;
-  }
+    // DO NOT TELL ME WHAT TO DO
+    SECRET_COMBO_1 {
+      SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SECRET_1 SS_TAP(X_ENTER));
+      did_leader_succeed = true;
+    }
 
-  leader_end();
+    // Songs
+    SEQ_TWO_KEYS(KC_R, KC_R) {
+      PLAY_SONG(rick);
+      did_leader_succeed = true;
+    }
+    SEQ_FIVE_KEYS(KC_M, KC_A, KC_R, KC_I, KC_O) {
+      PLAY_SONG(mario_theme_song);
+      did_leader_succeed = true;
+    }
+    SEQ_FOUR_KEYS(KC_M, KC_U, KC_S, KC_H) {
+      PLAY_SONG(mario_mushroom_song);
+      did_leader_succeed = true;
+    }
+    SEQ_THREE_KEYS(KC_D, KC_I, KC_S) {
+      PLAY_SONG(disney_song);
+      did_leader_succeed = true;
+    }
+    SEQ_FOUR_KEYS(KC_S, KC_T, KC_A, KC_R) {
+      PLAY_SONG(imperial_march_song);
+      did_leader_succeed = true;
+    }
+    
+    SEQ_FOUR_KEYS(KC_O, KC_V, KC_E, KC_R) {
+      PLAY_SONG(mario_game_over_song);
+      did_leader_succeed = true;
+    }
+
+    leader_end();
+    }
   }
-}
 
 // Error management (Led indicator)
 void error_management_reset(void) {
