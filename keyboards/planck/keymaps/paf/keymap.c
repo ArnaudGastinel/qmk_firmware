@@ -996,10 +996,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
     case LOWER_LAYER:
         print("Layer LOWER\n");
-        rgblight_setrgb_at(RGB_CYAN, TOP_LEFT_LED);
-        rgblight_setrgb_at(RGB_CYAN, TOP_MIDDLE_LEFT_LED);
-        rgblight_setrgb_at(RGB_CYAN, TOP_MIDDLE_RIGHT_LED);
-        rgblight_setrgb_at(RGB_CYAN, TOP_RIGHT_LED);
+        rgblight_setrgb_at(RGB_GREEN, TOP_LEFT_LED);
+        rgblight_setrgb_at(RGB_GREEN, TOP_MIDDLE_LEFT_LED);
+        rgblight_setrgb_at(RGB_GREEN, TOP_MIDDLE_RIGHT_LED);
+        rgblight_setrgb_at(RGB_GREEN, TOP_RIGHT_LED);
         break;
     case RAISE_LAYER:
         print("Layer RAISE\n");
@@ -1010,10 +1010,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         break;
     case ADJUST_LAYER:
         print("Layer ADJUST\n");
-        rgblight_setrgb_at(RGB_GREEN, TOP_LEFT_LED);
-        rgblight_setrgb_at(RGB_GREEN, TOP_MIDDLE_LEFT_LED);
-        rgblight_setrgb_at(RGB_GREEN, TOP_MIDDLE_RIGHT_LED);
-        rgblight_setrgb_at(RGB_GREEN, TOP_RIGHT_LED);
+        rgblight_setrgb_at(RGB_CYAN, TOP_LEFT_LED);
+        rgblight_setrgb_at(RGB_CYAN, TOP_MIDDLE_LEFT_LED);
+        rgblight_setrgb_at(RGB_CYAN, TOP_MIDDLE_RIGHT_LED);
+        rgblight_setrgb_at(RGB_CYAN, TOP_RIGHT_LED);
         break;
     case FN_LAYER:
         print("Layer FN\n");
