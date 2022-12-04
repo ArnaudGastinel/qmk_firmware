@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "print.h"
+#include "secret.h"
 // #include "sendstring_us_international.h"
 
 enum planck_layers {
@@ -244,7 +245,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Adjust (Lower + Raise)
   *                      v------------------------RGB CONTROL--------------------v
   * ,-----------------------------------------------------------------------------------.
-  * |      | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
+  * | Reset|QWERTY|      | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
   * |------+------+------+------+------+------+------+------+------+------+------+------|
   * |      |      |MUSmod|Aud on|Audoff|AGnorm|AGswap|Qwerty|      |      |      |      |
   * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -254,7 +255,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * `-----------------------------------------------------------------------------------'
   */
   [ADJUST_LAYER] = LAYOUT_planck_grid(
-      RESET,   QWERTY,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
+      RESET,   QWERTY,   XXXXXXX, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
       _______, XXXXXXX,  MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  XXXXXXX,  XXXXXXX, XXXXXXX,  _______,
       _______, MUV_DE,   MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  XXXXXXX, XXXXXXX, _______, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, CK_TOGG
@@ -948,6 +949,12 @@ LEADER_DICTIONARY() {
   // QMK
   SEQ_THREE_KEYS(KC_Q, KC_M, KC_K) {
     SEND_STRING("qmk compile -kb planck/rev6 -km paf");
+    did_leader_succeed = true;
+  }
+
+  // DO NOT TELL ME WHAT TO DO
+  SECRET_COMBO_1 {
+    SEND_STRING_SECRET_1;
     did_leader_succeed = true;
   }
 
