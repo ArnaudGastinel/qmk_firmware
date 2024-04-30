@@ -195,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *  └─────┴─────┴─────┴─────┴─────┴───────────┺━━━━━┹─────┴─────┴─────┴─────┘
     */
   [RAISE_LAYER] = LAYOUT_planck_grid(
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
     _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LCBR, KC_RCBR, KC_BSLS,
     _______, KC_UNDS, KC_TILD, KC_PIPE, KC_INS , _______, KC_LCBR, KC_RCBR, _______, _______,  _______, _______,
     _______, _______, _______, _______, _______, KC_DEL,  KC_DEL,  _______, _______, _______, _______, _______
@@ -225,9 +225,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *
   *
   *                 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
-  *                 │     │ F1  │ F2  │ F3  │ F4  │ F5  │ F6  │ F7  │ F8  │ F9  │ F10 │     │
+  *                 │ F1  │ F2  │ F3  │ F4  │ F5  │ F6  │ F7  │ F8  │ F9  │ F10 │ F11 │ F12 │
   *                 ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
-  *                 │     │ F11 │ F12 │     │     │     │     │     │     │     │     │     │
+  *                 │     │     │     │     │     │     │     │     │     │     │     │     │    
   *                 ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
   *                 │     │     │     │     │     │     │     │     │     │     │     │     │
   *                 ├─────╆━━━━━╅─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────╆━━━━━╅─────┤
@@ -236,10 +236,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                    \______ Media _____/   \___ Screen/sleep __/   \_____ Volume _____/
   */
   [FN_LAYER] = LAYOUT_planck_grid(
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10, _______,
-    _______, KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, _______,
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, _______,
-    KC_MPRV, _______, KC_MNXT, KC_MPLY, KC_BRID, KC_SLEP, KC_SLEP, KC_BRIU, KC_MUTE, KC_VOLD,  _______, KC_VOLU
+    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    KC_MPRV, _______, KC_MNXT, KC_MPLY, KC_BRID, KC_SLEP, KC_SLEP, KC_BRIU, KC_MUTE, KC_VOLD, _______, KC_VOLU
   ),
 
   /* Adjust (Lower + Raise)
@@ -312,17 +312,12 @@ const uint16_t PROGMEM greater_than_combo[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM lesser_than_combo[] = {KC_DOT, KC_SLASH, COMBO_END};
 const uint16_t PROGMEM not_equal_combo[] = {KC_COMM, KC_DOT, COMBO_END};
 
-// Navigation
-const uint16_t PROGMEM home_combo[] = {KC_A, KC_S, COMBO_END};
-const uint16_t PROGMEM end_combo[] = {KC_D, KC_F, COMBO_END};
+
 
 
 combo_t key_combos[] = {
     //
   [LEADER_KEY] = COMBO(lead_key_combo, QK_LEAD),
-  /////////
-  [HOME] = COMBO(home_combo, KC_HOME),
-  [END] = COMBO(end_combo, KC_END),
   // [SFTZ_DASH] = COMBO(shift_z_dash_combo, KC_MINS),
   [MIN] = COMBO(minus_combo, KC_MINUS),
   [ALT_MIN] = COMBO(alt_minus_combo, KC_MINUS),
