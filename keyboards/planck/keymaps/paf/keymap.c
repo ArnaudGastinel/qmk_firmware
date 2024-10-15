@@ -34,6 +34,8 @@ enum planck_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
   DVORAK,
+  M_LFT_SC,
+  M_RGH_SC 
 };
 
 typedef enum {
@@ -105,13 +107,17 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define LOWER TT(LOWER_LAYER)
 #define RAISE TT(RAISE_LAYER)
 
+// define some useful send strings
+#define SS_PREV_SCREEN SS_LSFT(SS_LGUI(SS_TAP(X_LEFT)))
+#define SS_NEXT_SCREEN SS_LSFT(SS_LGUI(SS_TAP(X_RIGHT)))
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Qwerty
    *              ,-----------------------------------------------------------------------------------.
-   *              | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
-   *              |------+------+------+------+------+------+------+------+------+------+------+------|
-   * Tap for   -- | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+   *  Tapdance -- | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+   *  for `       |------+------+------+------+------+------+------+------+------+------+------+------|
+   *              | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
    * Ctrl         |------+------+------+------+------+------+------+------+------+------+------+------|
    * Tap for ( -- | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Shift | -- Tap for )
    *              |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -185,7 +191,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Symbol layer
     *  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
-    *  │     │     │     │     │     │     │     │     │     │     │     │     │
+    *  │ F1  │ F2  │ F3  │ F4  │ F5  │ F6  │ F7  │ F8  │ F9  │ F10 │ F11 │ F12 │
     *  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
     *  │     │  !  │  @  │  #  │  $  │  %  │  ^  │  &  │  *  │  {  │  }  │     │ \
     *  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤  |-- Mostly shifted version
@@ -203,11 +209,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Directional navigation layer
   *
-  *     ASD gaming -----/`````````\                               /``````````````````````\----- Vim-style arrow keys
+  *     ASD gaming -----/`````````\                               
   *                 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
-  *                 │     │Home │  ↑  │ End │     │     │     │     │     │     │     │     │     │
+  *                 │     │Home │  ↑  │ End │     │     │     │     │     │     │     │     │     
   *                 ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
-  *                 │     │  ←  │  ↓  │  →  │     │     │     │  ←  │  ↓  │  ↑  │  →  │ PgUp│
+  *                 │     │  ←  │  ↓  │  →  │ WinL│     │     │ WinR│     │     │     │ PgUp│
   *                 ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
   *                 │     │     │     │     │     │     │     │     │     │     │     │ PgDn│
   *                 ├─────┼─────┼─────┼─────┼─────╆━━━━━━━━━━━╅─────┼─────┼─────┼─────┼─────┤
@@ -215,10 +221,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                 └─────┴─────┴─────┴─────┴─────┺━━━━━━━━━━━┹─────┴─────┴─────┴─────┴─────┘
   */
   [NAV_LAYER] = LAYOUT_planck_grid(
-    XXXXXXX, KC_HOME, KC_UP,   KC_END,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_PGUP,
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN,
-    _______, _______, _______, _______, XXXXXXX, NAV_SPC, NAV_SPC, XXXXXXX, _______, _______, _______, _______
+    XXXXXXX, KC_HOME, KC_UP,   KC_END,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, M_LFT_SC, XXXXXXX, XXXXXXX, M_RGH_SC, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGUP,
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN,
+    _______, _______, _______, _______, XXXXXXX,  NAV_SPC, NAV_SPC, XXXXXXX,  _______, _______, _______, _______
   ),
 
   /* GUI (window management/mouse/media controls) layer
@@ -255,8 +261,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * `-----------------------------------------------------------------------------------'
   */
   [ADJUST_LAYER] = LAYOUT_planck_grid(
-      QK_BOOT, QWERTY,   XXXXXXX, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
-      _______, XXXXXXX,  MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  XXXXXXX,  XXXXXXX, XXXXXXX,  _______,
+      QK_BOOT, QWERTY,   XXXXXXX, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL ,
+      _______, XXXXXXX,  MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  XXXXXXX, XXXXXXX, XXXXXXX, _______,
       _______, MUV_DE,   MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  XXXXXXX, XXXXXXX, _______, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, CK_TOGG
   )
@@ -311,9 +317,6 @@ const uint16_t PROGMEM equal_combo[] = {KC_Y, KC_U, COMBO_END};
 const uint16_t PROGMEM greater_than_combo[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM lesser_than_combo[] = {KC_DOT, KC_SLASH, COMBO_END};
 const uint16_t PROGMEM not_equal_combo[] = {KC_COMM, KC_DOT, COMBO_END};
-
-
-
 
 combo_t key_combos[] = {
     //
@@ -483,6 +486,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //   }
     //   return true;
     // END X,C,V hold
+
+    // Move Window to Left SCreen
+    case M_LFT_SC:
+      if (record->event.pressed) {
+        SEND_STRING(SS_PREV_SCREEN);
+      }
+      return false;
+    break;
+    // Move Window to Left SCreen
+    case M_RGH_SC:
+      if (record->event.pressed) {
+        SEND_STRING(SS_NEXT_SCREEN);
+      }
+      return false;
+    break;
     case QWERTY:
       if (record->event.pressed) {
         print("mode just switched to qwerty\n");
@@ -922,6 +940,14 @@ void matrix_scan_user(void) {
       SEND_STRING("git add . && git commit --amend");
       did_leader_succeed = true;
     }
+    SEQ_TWO_KEYS(KC_G, KC_R) {
+      SEND_STRING("git fetch -p && git rebase -i origin/main");
+      did_leader_succeed = true;
+    }
+    SEQ_TWO_KEYS(KC_G, KC_H) {
+      SEND_STRING("git fetch -p && git reset --hard ");
+      did_leader_succeed = true;
+    }
 
     // KUBERNETES
     SEQ_TWO_KEYS(KC_K, KC_P) {
@@ -997,42 +1023,42 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     
     switch (get_highest_layer(state)) {
     case LOWER_LAYER:
-        print("Layer LOWER\n");
+        // print("Layer LOWER\n");
         rgblight_setrgb_at(RGB_GREEN, TOP_LEFT_LED);
         rgblight_setrgb_at(RGB_GREEN, TOP_MIDDLE_LEFT_LED);
         rgblight_setrgb_at(RGB_GREEN, TOP_MIDDLE_RIGHT_LED);
         rgblight_setrgb_at(RGB_GREEN, TOP_RIGHT_LED);
         break;
     case RAISE_LAYER:
-        print("Layer RAISE\n");
+        // print("Layer RAISE\n");
         rgblight_setrgb_at(RGB_MAGENTA, TOP_LEFT_LED);
         rgblight_setrgb_at(RGB_MAGENTA, TOP_MIDDLE_LEFT_LED);
         rgblight_setrgb_at(RGB_MAGENTA, TOP_MIDDLE_RIGHT_LED);
         rgblight_setrgb_at(RGB_MAGENTA, TOP_RIGHT_LED);
         break;
     case ADJUST_LAYER:
-        print("Layer ADJUST\n");
+        // print("Layer ADJUST\n");
         rgblight_setrgb_at(RGB_CYAN, TOP_LEFT_LED);
         rgblight_setrgb_at(RGB_CYAN, TOP_MIDDLE_LEFT_LED);
         rgblight_setrgb_at(RGB_CYAN, TOP_MIDDLE_RIGHT_LED);
         rgblight_setrgb_at(RGB_CYAN, TOP_RIGHT_LED);
         break;
     case FN_LAYER:
-        print("Layer FN\n");
+        // print("Layer FN\n");
         rgblight_setrgb_at(RGB_CORAL, TOP_LEFT_LED);
         rgblight_setrgb_at(RGB_CORAL, TOP_MIDDLE_LEFT_LED);
         rgblight_setrgb_at(RGB_CORAL, TOP_MIDDLE_RIGHT_LED);
         rgblight_setrgb_at(RGB_CORAL, TOP_RIGHT_LED);
         break;
     case NAV_LAYER:
-        print("Layer NAV\n");
+        // print("Layer NAV\n");
         rgblight_setrgb_at(RGB_CORAL, TOP_LEFT_LED);
         rgblight_setrgb_at(RGB_CORAL, TOP_MIDDLE_LEFT_LED);
         rgblight_setrgb_at(RGB_CORAL, TOP_MIDDLE_RIGHT_LED);
         rgblight_setrgb_at(RGB_CORAL, TOP_RIGHT_LED);
         break;
     default: //  for any other layers, or the default layer
-        print("No layer\n");
+        // print("No layer\n");
         rgblight_setrgb (RGB_OFF);
         break;
     }
