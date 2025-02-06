@@ -40,7 +40,8 @@ enum planck_keycodes {
 
 typedef enum {
   TD_NONE,
-  TD_UNKNOWN,
+  TD_UNKNOWN_TAP,
+  TD_UNKNOWN_HOLD,
   TD_SINGLE_TAP,
   TD_SINGLE_HOLD,
   TD_DOUBLE_TAP,
@@ -63,7 +64,8 @@ enum {
   // TD_V_PASTE,
   // TD_Z_UNDO,
   TD_SFT_L,
-  TD_SFT_R
+  TD_SFT_R,
+  TD_ENT_PWR_TOYS
 };
 
 td_state_t cur_dance(qk_tap_dance_state_t *state);
@@ -84,11 +86,19 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 // void v_finished(qk_tap_dance_state_t *state, void *user_data);
 // void v_reset(qk_tap_dance_state_t *state, void *user_data);
 
+// void v_finished(qk_tap_dance_state_t *state, void *user_data);
+
 void sft_on_each_tap(qk_tap_dance_state_t *state, void *user_data);
+
 void sft_l_finished(qk_tap_dance_state_t *state, void *user_data);
 void sft_l_reset(qk_tap_dance_state_t *state, void *user_data);
+
 void sft_r_finished(qk_tap_dance_state_t *state, void *user_data);
 void sft_r_reset(qk_tap_dance_state_t *state, void *user_data);
+
+void pwr_on_each_tap(qk_tap_dance_state_t *state, void *user_data);
+void pwr_finished(qk_tap_dance_state_t *state, void *user_data);
+void pwr_reset(qk_tap_dance_state_t *state, void *user_data);
 
 void error_management_reset(void);
 
@@ -101,7 +111,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   // [TD_C_COPY] = ACTION_TAP_DANCE_FN_ADVANCED(c_on_each_tap, c_finished, c_reset),
   // [TD_V_PASTE] = ACTION_TAP_DANCE_FN_ADVANCED(v_on_each_tap, v_finished, v_reset),
   [TD_SFT_L] = ACTION_TAP_DANCE_FN_ADVANCED(sft_on_each_tap, sft_l_finished, sft_l_reset),
-  [TD_SFT_R] = ACTION_TAP_DANCE_FN_ADVANCED(sft_on_each_tap, sft_r_finished, sft_r_reset)
+  [TD_SFT_R] = ACTION_TAP_DANCE_FN_ADVANCED(sft_on_each_tap, sft_r_finished, sft_r_reset),
+  [TD_ENT_PWR_TOYS] = ACTION_TAP_DANCE_FN_ADVANCED(pwr_on_each_tap, pwr_finished, pwr_reset)
 };
 
 #define LOWER TT(LOWER_LAYER)
@@ -121,16 +132,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * Ctrl         |------+------+------+------+------+------+------+------+------+------+------+------|
    * Tap for ( -- | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Shift | -- Tap for )
    *              |------+------+------+------+------+------+------+------+------+------+------+------|
-   * Tap for [ ─┐ | Ctrl | FN   | Alt  | GUI  |Lower |    Space    |Raise | Menu | CMD  |FN    |Enter | -- Tap for ]
+   * Tap for [ ─┐ | Ctrl | FN   | Alt  | GUI  |Lower |    Space    |Raise | Menu | CMD  |FN    |Enter | -- Tap for Ctrl-Alt-Win
    *            │  `-----------------------------------------------------------------------------------'
-   *            └-----------┘                                                      |
+   *            └-----------┘                                                      |      └-------------- Tap for ]
    *                                                                       Tap for Ctrl
    */
   [QWERTY_LAYER] = LAYOUT_planck_grid(
-      TD(TD_ESC_GRV),   KC_Q,     KC_W,     KC_E,    KC_R,   KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,     KC_BSPC,
+      KC_ESC,   KC_Q,     KC_W,     KC_E,    KC_R,   KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,     KC_BSPC,
       KC_TAB,           KC_A,     KC_S,     KC_D,    KC_F,   KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN,  KC_QUOT,
       TD(TD_SFT_L),     KC_Z,     KC_X,     KC_C,    KC_V,   KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH,  TD(TD_SFT_R),
-      KC_LCTL,          GUI_L,    KC_LGUI,  KC_LALT, LOWER,  NAV_SPC, NAV_SPC, RAISE,   KC_APP,  KC_RALT,  GUI_R,    CTL_ENT
+      KC_LCTL,          GUI_L,    KC_LGUI,  KC_LALT, LOWER,  NAV_SPC, NAV_SPC, RAISE,   KC_APP,  KC_RALT,  GUI_R,    TD(TD_ENT_PWR_TOYS)
   ),
 
 // TD(TD_Z_UNDO),    TD(TD_X_CUT),    TD(TD_C_COPY),    TD(TD_V_PASTE), Removed for combos
@@ -211,19 +222,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *
   *     ASD gaming -----/`````````\                               
   *                 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
-  *                 │     │Home │  ↑  │ End │     │     │     │     │     │     │     │     │     
+  *                 │     │Home │  ↑  │ End │     │     │     │     │Home │  ↑  │ End │     │     
   *                 ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
-  *                 │     │  ←  │  ↓  │  →  │ WinL│     │     │ WinR│     │     │     │ PgUp│
+  *                 │     │  ←  │  ↓  │  →  │ WinL│ PgUp│     │ WinR│  ←  │  ↓  │  →  │ PgUp│
   *                 ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
-  *                 │     │     │     │     │     │     │     │     │     │     │     │ PgDn│
+  *                 │     │     │     │     │     │ PgDn│     │     │     │     │     │ PgDn│
   *                 ├─────┼─────┼─────┼─────┼─────╆━━━━━━━━━━━╅─────┼─────┼─────┼─────┼─────┤
   *                 │     │     │     │     │     ┃           ┃     │     │     │     │     │
   *                 └─────┴─────┴─────┴─────┴─────┺━━━━━━━━━━━┹─────┴─────┴─────┴─────┴─────┘
   */
   [NAV_LAYER] = LAYOUT_planck_grid(
-    XXXXXXX, KC_HOME, KC_UP,   KC_END,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, M_LFT_SC, XXXXXXX, XXXXXXX, M_RGH_SC, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGUP,
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN,
+    _______, KC_HOME, KC_UP,   KC_END,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  KC_HOME, KC_UP,   KC_END,  _______,
+    _______, KC_LEFT, KC_DOWN, KC_RGHT, M_LFT_SC, KC_PGUP, XXXXXXX, M_RGH_SC, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP,
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_PGDN, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN,
     _______, _______, _______, _______, XXXXXXX,  NAV_SPC, NAV_SPC, XXXXXXX,  _______, _______, _______, _______
   ),
 
@@ -273,12 +284,13 @@ enum combo_events {
   LEADER_KEY,
   E_ACUTE,
   E_GRAVE,
-  E_TREMA,
+  E_CIRCUM,
   A_GRAVE,
   A_CIRCUM,
   I_TREMA,
   U_GRAVE,
   U_CIRCUM,
+  O_CIRCUM,
   HOME,
   END,
   // SFTZ_DASH,
@@ -291,6 +303,7 @@ enum combo_events {
   GREATER_THAN,
   LESSER_THAN,
   NOT_EQUAL,
+  GRAVE,
   COMBO_LENGTH
 };
 uint16_t COMBO_LEN = COMBO_LENGTH; // remove the COMBO_COUNT define and use this instead!
@@ -299,12 +312,13 @@ const uint16_t PROGMEM lead_key_combo[] = {KC_Q, KC_W, COMBO_END};
 // Accents
 const uint16_t PROGMEM e_acute_combo[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM e_grave_combo[] = {KC_E, KC_R, COMBO_END};
-const uint16_t PROGMEM e_trema_combo[] = {KC_W, KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM e_circum_combo[] = {KC_W, KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM a_grave_combo[] = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM a_circum_combo[] = {KC_TAB, KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM i_trema_combo[] = {KC_U, KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM u_grave_combo[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM u_circum_combo[] = {KC_Y, KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM o_circum_combo[] = {KC_I, KC_O, KC_P, COMBO_END};
 
 const uint16_t PROGMEM cedille_combo[] = {KC_X, KC_C, COMBO_END};
 // const uint16_t PROGMEM shift_z_dash_combo[] = {KC_LSFT, KC_Z, COMBO_END};
@@ -317,6 +331,8 @@ const uint16_t PROGMEM equal_combo[] = {KC_Y, KC_U, COMBO_END};
 const uint16_t PROGMEM greater_than_combo[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM lesser_than_combo[] = {KC_DOT, KC_SLASH, COMBO_END};
 const uint16_t PROGMEM not_equal_combo[] = {KC_COMM, KC_DOT, COMBO_END};
+
+const uint16_t PROGMEM grave_combo[] = {KC_ESC, KC_Q, COMBO_END};
 
 combo_t key_combos[] = {
     //
@@ -332,16 +348,17 @@ combo_t key_combos[] = {
   ////////
   [E_ACUTE] = COMBO_ACTION(e_acute_combo),
   [E_GRAVE] = COMBO_ACTION(e_grave_combo),
-  [E_TREMA] = COMBO_ACTION(e_trema_combo),
+  [E_CIRCUM] = COMBO_ACTION(e_circum_combo),
   [A_GRAVE] = COMBO_ACTION(a_grave_combo),
   [A_CIRCUM] = COMBO_ACTION(a_circum_combo),
   [I_TREMA] = COMBO_ACTION(i_trema_combo),
   [U_GRAVE] = COMBO_ACTION(u_grave_combo),
   [U_CIRCUM] = COMBO_ACTION(u_circum_combo),
+  [O_CIRCUM] = COMBO_ACTION(o_circum_combo),
   [NOT_EQUAL] = COMBO_ACTION(not_equal_combo),
   //
-  [CEDILLE] = COMBO_ACTION(cedille_combo)
-
+  [CEDILLE] = COMBO_ACTION(cedille_combo),
+  [GRAVE] = COMBO_ACTION(grave_combo)
 
 };
 /* COMBO_ACTION(x) is same as COMBO(x, KC_NO) */
@@ -358,9 +375,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         SEND_STRING(SS_TAP(X_GRV) SS_TAP(X_E));
       }
       break;
-    case E_TREMA:
+    case E_CIRCUM:
       if (pressed) {
-        SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_QUOT) SS_UP(X_LSFT) SS_TAP(X_E));
+        SEND_STRING(SS_LSFT(SS_TAP(X_6)) SS_TAP(X_E));
+        // SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_QUOT) SS_UP(X_LSFT) SS_TAP(X_E)); // ë
       }
       break;
     case A_GRAVE:
@@ -385,7 +403,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
     case U_CIRCUM:
       if (pressed) {
-        SEND_STRING(SS_LSFT(SS_TAP(X_6)) SS_TAP(X_A));
+        SEND_STRING(SS_LSFT(SS_TAP(X_6)) SS_TAP(X_U));
+      }
+      break;
+    case O_CIRCUM:
+      if (pressed) {
+        SEND_STRING(SS_LSFT(SS_TAP(X_6)) SS_TAP(X_O));
       }
       break;
     case CEDILLE:
@@ -398,6 +421,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         SEND_STRING(SS_LSFT(SS_TAP(X_1)) SS_TAP(X_EQL) );
       }
       break;
+    case GRAVE: 
+      if (pressed) {
+        tap_code(KC_GRAVE);
+      }
     // case BSPC_LSFT_CLEAR:
     //   if (pressed) {
     //     tap_code16(KC_END);
@@ -662,8 +689,9 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
     // if (state->count == 3) {
     //     if (state->interrupted || !state->pressed) return TD_TRIPLE_TAP;
     //     else return TD_TRIPLE_HOLD;
-    // } else return TD_UNKNOWN;
-    return TD_UNKNOWN;
+    // } else return TD_UNKNOWN_TAP;
+    if (state->pressed) return TD_UNKNOWN_HOLD;
+    else return TD_UNKNOWN_TAP;
 }
 
 void handleDefault(qk_tap_dance_state_t *state, uint16_t keycode) {
@@ -704,6 +732,11 @@ static td_tap_t l_sfttap_state = {
 };
 
 static td_tap_t r_sfttap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+};
+
+static td_tap_t pwr_tap_state = {
     .is_press_action = true,
     .state = TD_NONE
 };
@@ -787,21 +820,15 @@ static td_tap_t r_sfttap_state = {
 // void z_reset(qk_tap_dance_state_t *state, void *user_data) {
 //     tap_dance_reset(&ztap_state, state, KC_Z);
 // }
+
 void sft_on_each_tap(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void sft_l_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        if (state->pressed) l_sfttap_state.state = TD_SINGLE_HOLD;
-        else l_sfttap_state.state = TD_SINGLE_TAP;
-    } else if (state->count == 2) {
-        // TD_DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
-        // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
-        // keystrokes of the key, and not the 'double tap' action/macro.
-        if (state->interrupted) l_sfttap_state.state = TD_DOUBLE_SINGLE_TAP;
-        else if (state->pressed) l_sfttap_state.state = TD_DOUBLE_HOLD;
-        else l_sfttap_state.state = TD_DOUBLE_TAP;
-    }
+
+  l_sfttap_state.state = cur_dance(state);
+ // Special handling for shift because shift + something is very quick
+  if (l_sfttap_state.state == TD_SINGLE_TAP && state->interrupted && state->pressed) l_sfttap_state.state = TD_SINGLE_HOLD;
 
   switch (l_sfttap_state.state) {
       case TD_SINGLE_HOLD: register_code(KC_LSFT); break;
@@ -828,18 +855,10 @@ void sft_l_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void sft_r_finished(qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-        if (!state->interrupted && !state->pressed) r_sfttap_state.state = TD_SINGLE_TAP;
-        // Special case here, if the key is interrupted we must consider it as a HOLD
-        else r_sfttap_state.state = TD_SINGLE_HOLD;
-    } else if (state->count == 2) {
-        // TD_DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
-        // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
-        // keystrokes of the key, and not the 'double tap' action/macro.
-        if (state->interrupted) r_sfttap_state.state = TD_DOUBLE_SINGLE_TAP;
-        else if (state->pressed) r_sfttap_state.state = TD_DOUBLE_HOLD;
-        else r_sfttap_state.state = TD_DOUBLE_TAP;
-    }
+
+  r_sfttap_state.state = cur_dance(state);
+  // Special handling for shift because shift + something is very quick
+  if (r_sfttap_state.state == TD_SINGLE_TAP && state->interrupted && state->pressed) r_sfttap_state.state = TD_SINGLE_HOLD;
 
   switch (r_sfttap_state.state) {
       case TD_SINGLE_HOLD: register_code(KC_RSFT); break;
@@ -863,6 +882,36 @@ void sft_r_reset(qk_tap_dance_state_t *state, void *user_data) {
           unregister_code(KC_RSFT);
     }
     r_sfttap_state.state = TD_NONE;
+}
+
+void pwr_on_each_tap(qk_tap_dance_state_t *state, void *user_data) {
+  // PWR enter works only for single hold, everything else is the enter key
+  if (state->count > 1) {
+    state->finished = true;
+    pwr_tap_state.state = TD_DOUBLE_TAP;
+    handleDefault(state, KC_ENTER);
+  }
+}
+
+void pwr_finished(qk_tap_dance_state_t *state, void *user_data) {
+  pwr_tap_state.state = cur_dance(state);
+
+  switch (pwr_tap_state.state) {
+      case TD_SINGLE_TAP: register_code(KC_ENTER); break;
+      case TD_SINGLE_HOLD: register_code(KC_LCTL); register_code(KC_LGUI); register_code(KC_LALT); break;
+      default:
+        handleDefault(state, KC_ENTER);
+  }
+}
+
+void pwr_reset(qk_tap_dance_state_t *state, void *user_data) {
+  switch (pwr_tap_state.state) {
+        case TD_SINGLE_TAP: unregister_code(KC_ENTER); break;
+        case TD_SINGLE_HOLD: unregister_code(KC_LCTL);  unregister_code(KC_LGUI);  unregister_code(KC_LALT); break;
+        default:
+          unregister_code(KC_ENTER);
+    }
+    pwr_tap_state.state = TD_NONE;
 }
 
 bool caps_word_press_user(uint16_t keycode) {
@@ -976,6 +1025,11 @@ void matrix_scan_user(void) {
     // DO NOT TELL ME WHAT TO DO
     SECRET_COMBO_1 {
       SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SECRET_1 SS_TAP(X_ENTER));
+      did_leader_succeed = true;
+    }
+
+    SECRET_COMBO_ADMIN {
+      SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SECRET_ADMIN_LOGIN SS_TAP(X_TAB) SECRET_ADMIN_PASSWORD SS_TAP(X_ENTER));
       did_leader_succeed = true;
     }
 
