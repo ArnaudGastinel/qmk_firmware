@@ -68,42 +68,42 @@ enum {
   TD_ENT_PWR_TOYS
 };
 
-td_state_t cur_dance(qk_tap_dance_state_t *state);
+td_state_t cur_dance(tap_dance_state_t *state);
 
-// void z_on_each_tap(qk_tap_dance_state_t *state, void *user_data);
-// void z_finished(qk_tap_dance_state_t *state, void *user_data);
-// void z_reset(qk_tap_dance_state_t *state, void *user_data);
+// void z_on_each_tap(tap_dance_state_t *state, void *user_data);
+// void z_finished(tap_dance_state_t *state, void *user_data);
+// void z_reset(tap_dance_state_t *state, void *user_data);
 
-// void x_on_each_tap(qk_tap_dance_state_t *state, void *user_data);
-// void x_finished(qk_tap_dance_state_t *state, void *user_data);
-// void x_reset(qk_tap_dance_state_t *state, void *user_data);
+// void x_on_each_tap(tap_dance_state_t *state, void *user_data);
+// void x_finished(tap_dance_state_t *state, void *user_data);
+// void x_reset(tap_dance_state_t *state, void *user_data);
 
-// void c_on_each_tap(qk_tap_dance_state_t *state, void *user_data);
-// void c_finished(qk_tap_dance_state_t *state, void *user_data);
-// void c_reset(qk_tap_dance_state_t *state, void *user_data);
+// void c_on_each_tap(tap_dance_state_t *state, void *user_data);
+// void c_finished(tap_dance_state_t *state, void *user_data);
+// void c_reset(tap_dance_state_t *state, void *user_data);
 
-// void v_on_each_tap(qk_tap_dance_state_t *state, void *user_data);
-// void v_finished(qk_tap_dance_state_t *state, void *user_data);
-// void v_reset(qk_tap_dance_state_t *state, void *user_data);
+// void v_on_each_tap(tap_dance_state_t *state, void *user_data);
+// void v_finished(tap_dance_state_t *state, void *user_data);
+// void v_reset(tap_dance_state_t *state, void *user_data);
 
-// void v_finished(qk_tap_dance_state_t *state, void *user_data);
+// void v_finished(tap_dance_state_t *state, void *user_data);
 
-void sft_on_each_tap(qk_tap_dance_state_t *state, void *user_data);
+void sft_on_each_tap(tap_dance_state_t *state, void *user_data);
 
-void sft_l_finished(qk_tap_dance_state_t *state, void *user_data);
-void sft_l_reset(qk_tap_dance_state_t *state, void *user_data);
+void sft_l_finished(tap_dance_state_t *state, void *user_data);
+void sft_l_reset(tap_dance_state_t *state, void *user_data);
 
-void sft_r_finished(qk_tap_dance_state_t *state, void *user_data);
-void sft_r_reset(qk_tap_dance_state_t *state, void *user_data);
+void sft_r_finished(tap_dance_state_t *state, void *user_data);
+void sft_r_reset(tap_dance_state_t *state, void *user_data);
 
-void pwr_on_each_tap(qk_tap_dance_state_t *state, void *user_data);
-void pwr_finished(qk_tap_dance_state_t *state, void *user_data);
-void pwr_reset(qk_tap_dance_state_t *state, void *user_data);
+void pwr_on_each_tap(tap_dance_state_t *state, void *user_data);
+void pwr_finished(tap_dance_state_t *state, void *user_data);
+void pwr_reset(tap_dance_state_t *state, void *user_data);
 
 void error_management_reset(void);
 
 // Tap Dance Definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
   // Tap once for Esc, twice for Grave
   [TD_ESC_GRV]  = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_GRV),
   // [TD_Z_UNDO] = ACTION_TAP_DANCE_FN_ADVANCED(z_on_each_tap, z_finished, z_reset),
@@ -264,17 +264,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * ,-----------------------------------------------------------------------------------.
   * | Reset|QWERTY|      | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
   * |------+------+------+------+------+------+------+------+------+------+------+------|
-  * |      |      |MUSmod|Aud on|Audoff|AGnorm|AGswap|Qwerty|      |      |      |      |
+  * |      |      |MUSmod|      |Audoff|AGnorm|AGswap|Qwerty|      |      |      |      |
   * |------+------+------+------+------+------+------+------+------+------+------+------|
-  * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
+  * |      |      |      |Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
   * |------+------+------+------+------+------+------+------+------+------+------+------|
   * |      |      |      |      |      |             |      |      |      |      | Clic |
   * `-----------------------------------------------------------------------------------'
   */
   [ADJUST_LAYER] = LAYOUT_planck_grid(
       QK_BOOT, QWERTY,   XXXXXXX, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL ,
-      _______, XXXXXXX,  MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  XXXXXXX, XXXXXXX, XXXXXXX, _______,
-      _______, MUV_DE,   MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  XXXXXXX, XXXXXXX, _______, _______, _______,
+      _______, XXXXXXX,  XXXXXXX,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, XXXXXXX,   XXXXXXX,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  XXXXXXX, XXXXXXX, _______, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, CK_TOGG
   )
 
@@ -669,7 +669,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
  * For the third point, there does exist the 'TD_DOUBLE_SINGLE_TAP', however this is not fully tested
  *
  */
-td_state_t cur_dance(qk_tap_dance_state_t *state) {
+td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
         // Key has not been interrupted, but the key is still held. Means you want to send a 'HOLD'.
@@ -694,7 +694,7 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
     else return TD_UNKNOWN_TAP;
 }
 
-void handleDefault(qk_tap_dance_state_t *state, uint16_t keycode) {
+void handleDefault(tap_dance_state_t *state, uint16_t keycode) {
     int loop = state->count - 1;
     for (int i = 0; i < loop; i ++) {
       tap_code(keycode);
@@ -741,7 +741,7 @@ static td_tap_t pwr_tap_state = {
     .state = TD_NONE
 };
 
-// void tap_dance_on_each_step(td_tap_t* keycode_state, qk_tap_dance_state_t *state, uint16_t keycode) {
+// void tap_dance_on_each_step(td_tap_t* keycode_state, tap_dance_state_t *state, uint16_t keycode) {
 //   if (state->count > 2) {
 //     state->finished = true;
 //     keycode_state->state = TD_TRIPLE_TAP;
@@ -749,7 +749,7 @@ static td_tap_t pwr_tap_state = {
 //   }
 // }
 
-// void tap_dance_finished(td_tap_t* keycode_state, qk_tap_dance_state_t *state, uint16_t keycode) {
+// void tap_dance_finished(td_tap_t* keycode_state, tap_dance_state_t *state, uint16_t keycode) {
 //   keycode_state->state = cur_dance(state);
 //     switch (keycode_state->state) {
 //         case TD_SINGLE_TAP: register_code(keycode); break;
@@ -759,7 +759,7 @@ static td_tap_t pwr_tap_state = {
 //     }
 // }
 
-// void tap_dance_reset(td_tap_t* keycode_state, qk_tap_dance_state_t *state, uint16_t keycode) {
+// void tap_dance_reset(td_tap_t* keycode_state, tap_dance_state_t *state, uint16_t keycode) {
 //   switch (keycode_state->state) {
 //         case TD_SINGLE_TAP: unregister_code(keycode); break;
 //         case TD_DOUBLE_HOLD: unregister_code(KC_LCTL); break;
@@ -770,61 +770,61 @@ static td_tap_t pwr_tap_state = {
 // }
 
 // // Ctrl + x
-// void x_on_each_tap(qk_tap_dance_state_t *state, void *user_data) {
+// void x_on_each_tap(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_on_each_step(&xtap_state, state, KC_X);
 // }
 
-// void x_finished(qk_tap_dance_state_t *state, void *user_data) {
+// void x_finished(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_finished(&xtap_state, state, KC_X);
 // }
 
-// void x_reset(qk_tap_dance_state_t *state, void *user_data) {
+// void x_reset(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_reset(&xtap_state, state, KC_X);
 // }
 
 // // Ctrl + c
-// void c_on_each_tap(qk_tap_dance_state_t *state, void *user_data) {
+// void c_on_each_tap(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_on_each_step(&ctap_state, state, KC_C);
 // }
 
-// void c_finished(qk_tap_dance_state_t *state, void *user_data) {
+// void c_finished(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_finished(&ctap_state, state, KC_C);
 // }
 
-// void c_reset(qk_tap_dance_state_t *state, void *user_data) {
+// void c_reset(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_reset(&ctap_state, state, KC_C);
 // }
 
 // // Ctrl + v
-// void v_on_each_tap(qk_tap_dance_state_t *state, void *user_data) {
+// void v_on_each_tap(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_on_each_step(&vtap_state, state, KC_V);
 // }
 
-// void v_finished(qk_tap_dance_state_t *state, void *user_data) {
+// void v_finished(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_finished(&vtap_state, state, KC_V);
 // }
 
-// void v_reset(qk_tap_dance_state_t *state, void *user_data) {
+// void v_reset(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_reset(&vtap_state, state, KC_V);
 // }
 
 // // Ctrl + z
-// void z_on_each_tap(qk_tap_dance_state_t *state, void *user_data) {
+// void z_on_each_tap(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_on_each_step(&ztap_state, state, KC_Z);
 // }
 
-// void z_finished(qk_tap_dance_state_t *state, void *user_data) {
+// void z_finished(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_finished(&ztap_state, state, KC_Z);
 // }
 
-// void z_reset(qk_tap_dance_state_t *state, void *user_data) {
+// void z_reset(tap_dance_state_t *state, void *user_data) {
 //     tap_dance_reset(&ztap_state, state, KC_Z);
 // }
 
-void sft_on_each_tap(qk_tap_dance_state_t *state, void *user_data) {
+void sft_on_each_tap(tap_dance_state_t *state, void *user_data) {
 }
 
-void sft_l_finished(qk_tap_dance_state_t *state, void *user_data) {
+void sft_l_finished(tap_dance_state_t *state, void *user_data) {
 
   l_sfttap_state.state = cur_dance(state);
  // Special handling for shift because shift + something is very quick
@@ -841,7 +841,7 @@ void sft_l_finished(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
-void sft_l_reset(qk_tap_dance_state_t *state, void *user_data) {
+void sft_l_reset(tap_dance_state_t *state, void *user_data) {
     switch (l_sfttap_state.state) {
         case TD_SINGLE_HOLD: unregister_code(KC_LSFT); break;
         case TD_SINGLE_TAP: unregister_code(KC_LSFT); break;
@@ -854,7 +854,7 @@ void sft_l_reset(qk_tap_dance_state_t *state, void *user_data) {
     l_sfttap_state.state = TD_NONE;
 }
 
-void sft_r_finished(qk_tap_dance_state_t *state, void *user_data) {
+void sft_r_finished(tap_dance_state_t *state, void *user_data) {
 
   r_sfttap_state.state = cur_dance(state);
   // Special handling for shift because shift + something is very quick
@@ -871,7 +871,7 @@ void sft_r_finished(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
-void sft_r_reset(qk_tap_dance_state_t *state, void *user_data) {
+void sft_r_reset(tap_dance_state_t *state, void *user_data) {
     switch (r_sfttap_state.state) {
         case TD_SINGLE_HOLD: unregister_code(KC_RSFT); break;
         case TD_SINGLE_TAP: unregister_code(KC_RSFT); break;
@@ -884,7 +884,7 @@ void sft_r_reset(qk_tap_dance_state_t *state, void *user_data) {
     r_sfttap_state.state = TD_NONE;
 }
 
-void pwr_on_each_tap(qk_tap_dance_state_t *state, void *user_data) {
+void pwr_on_each_tap(tap_dance_state_t *state, void *user_data) {
   // PWR enter works only for single hold, everything else is the enter key
   if (state->count > 1) {
     state->finished = true;
@@ -893,7 +893,7 @@ void pwr_on_each_tap(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
-void pwr_finished(qk_tap_dance_state_t *state, void *user_data) {
+void pwr_finished(tap_dance_state_t *state, void *user_data) {
   pwr_tap_state.state = cur_dance(state);
 
   switch (pwr_tap_state.state) {
@@ -904,7 +904,7 @@ void pwr_finished(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
-void pwr_reset(qk_tap_dance_state_t *state, void *user_data) {
+void pwr_reset(tap_dance_state_t *state, void *user_data) {
   switch (pwr_tap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_ENTER); break;
         case TD_SINGLE_HOLD: unregister_code(KC_LCTL);  unregister_code(KC_LGUI);  unregister_code(KC_LALT); break;
@@ -932,7 +932,6 @@ bool caps_word_press_user(uint16_t keycode) {
     case KC_UNDS:
     case KC_DEL:
       return true;
-
     default:
       return false;  // Deactivate Caps Word.
   }
@@ -943,21 +942,7 @@ bool did_leader_succeed;
 bool leader_led_on = false;
 static uint16_t leader_result_timer;
 
-LEADER_EXTERNS();
-void leader_start(void) {
-#ifdef AUDIO_ENABLE
-  //PLAY_SONG(leader_start_song);
-#endif
-  rgblight_setrgb_at(RGB_BLUE, TOP_LEFT_LED);
-  rgblight_setrgb_at(RGB_BLUE, TOP_MIDDLE_LEFT_LED);
-  rgblight_setrgb_at(RGB_BLUE, TOP_MIDDLE_RIGHT_LED);
-  rgblight_setrgb_at(RGB_BLUE, TOP_RIGHT_LED);
-
-  rgblight_setrgb_at(RGB_OFF, BOTTOM_LEFT_LED);
-  rgblight_setrgb_at(RGB_OFF, BOTTOM_RIGHT_LED);
-}
-
-void leader_end(void) {
+void leader_led(void) {
   // Turn off leader start indication
   rgblight_setrgb(RGB_OFF);
 
@@ -972,96 +957,107 @@ void leader_end(void) {
   leader_result_timer = timer_read();
 }
 
-void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    did_leader_succeed = leading = false;
+void leader_start_user(void) {
+#ifdef AUDIO_ENABLE
+  //PLAY_SONG(leader_start_song);
+#endif
+  rgblight_setrgb_at(RGB_BLUE, TOP_LEFT_LED);
+  rgblight_setrgb_at(RGB_BLUE, TOP_MIDDLE_LEFT_LED);
+  rgblight_setrgb_at(RGB_BLUE, TOP_MIDDLE_RIGHT_LED);
+  rgblight_setrgb_at(RGB_BLUE, TOP_RIGHT_LED);
+
+  rgblight_setrgb_at(RGB_OFF, BOTTOM_LEFT_LED);
+  rgblight_setrgb_at(RGB_OFF, BOTTOM_RIGHT_LED);
+}
+
+void leader_end_user(void) {
+    did_leader_succeed = false;
 
     // GIT
-    SEQ_TWO_KEYS(KC_G, KC_A) {
+    if (leader_sequence_two_keys(KC_G, KC_A)) {
       SEND_STRING("git add . && git commit");
       did_leader_succeed = true;
     }
-    SEQ_TWO_KEYS(KC_G, KC_F) {
+    else if (leader_sequence_two_keys(KC_G, KC_F)) {
       SEND_STRING("git push --force-with-lease");
       did_leader_succeed = true;
     }
-    SEQ_THREE_KEYS(KC_G, KC_A, KC_M) {
+    else if (leader_sequence_three_keys(KC_G, KC_A, KC_M)) {
       SEND_STRING("git add . && git commit --amend");
       did_leader_succeed = true;
     }
-    SEQ_TWO_KEYS(KC_G, KC_R) {
+    else if (leader_sequence_two_keys(KC_G, KC_R)) {
       SEND_STRING("git fetch -p && git rebase -i origin/main");
       did_leader_succeed = true;
     }
-    SEQ_TWO_KEYS(KC_G, KC_H) {
+    else if (leader_sequence_two_keys(KC_G, KC_H)) {
       SEND_STRING("git fetch -p && git reset --hard ");
       did_leader_succeed = true;
     }
 
     // KUBERNETES
-    SEQ_TWO_KEYS(KC_K, KC_P) {
+    else if (leader_sequence_two_keys(KC_K, KC_P)) {
       SEND_STRING("kubectl get pods");
       did_leader_succeed = true;
     }
-    SEQ_TWO_KEYS(KC_K, KC_L) {
+    else if (leader_sequence_two_keys(KC_K, KC_L)) {
         SEND_STRING("kubectl logs -f --since=10m");
         did_leader_succeed = true;
     }
-    SEQ_TWO_KEYS(KC_K, KC_D) {
+    else if (leader_sequence_two_keys(KC_K, KC_D)) {
         SEND_STRING("kubectl describe ");
         did_leader_succeed = true;
     }
-    SEQ_TWO_KEYS(KC_K, KC_R) {
+    else if (leader_sequence_two_keys(KC_K, KC_R)) {
         SEND_STRING("kubectl delete ");
         did_leader_succeed = true;
     }
 
     // QMK
-    SEQ_THREE_KEYS(KC_Q, KC_M, KC_K) {
+    else if (leader_sequence_three_keys(KC_Q, KC_M, KC_K)) {
       SEND_STRING("qmk compile -kb planck/rev6 -km paf");
       did_leader_succeed = true;
     }
 
     // DO NOT TELL ME WHAT TO DO
-    SECRET_COMBO_1 {
+    else if (SECRET_COMBO_1) {
       SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SECRET_1 SS_TAP(X_ENTER));
       did_leader_succeed = true;
     }
 
-    SECRET_COMBO_ADMIN {
+    else if (SECRET_COMBO_ADMIN) {
       SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SECRET_ADMIN_LOGIN SS_TAP(X_TAB) SECRET_ADMIN_PASSWORD SS_TAP(X_ENTER));
       did_leader_succeed = true;
     }
 
     // Songs
-    SEQ_TWO_KEYS(KC_R, KC_R) {
+    else if (leader_sequence_two_keys(KC_R, KC_R)) {
       PLAY_SONG(rick);
       did_leader_succeed = true;
     }
-    SEQ_FIVE_KEYS(KC_M, KC_A, KC_R, KC_I, KC_O) {
+    else if (leader_sequence_five_keys(KC_M, KC_A, KC_R, KC_I, KC_O)) {
       PLAY_SONG(mario_theme_song);
       did_leader_succeed = true;
     }
-    SEQ_FOUR_KEYS(KC_M, KC_U, KC_S, KC_H) {
+    else if (leader_sequence_four_keys(KC_M, KC_U, KC_S, KC_H)) {
       PLAY_SONG(mario_mushroom_song);
       did_leader_succeed = true;
     }
-    SEQ_THREE_KEYS(KC_D, KC_I, KC_S) {
+    else if (leader_sequence_three_keys(KC_D, KC_I, KC_S)) {
       PLAY_SONG(disney_song);
       did_leader_succeed = true;
     }
-    SEQ_FOUR_KEYS(KC_S, KC_T, KC_A, KC_R) {
+    else if (leader_sequence_four_keys(KC_S, KC_T, KC_A, KC_R)) {
       PLAY_SONG(imperial_march_song);
       did_leader_succeed = true;
     }
     
-    SEQ_FOUR_KEYS(KC_O, KC_V, KC_E, KC_R) {
+    else if (leader_sequence_four_keys(KC_O, KC_V, KC_E, KC_R)) {
       PLAY_SONG(mario_game_over_song);
       did_leader_succeed = true;
     }
 
-    leader_end();
-    }
+    leader_led();
   }
 
 // Error management (Led indicator)
